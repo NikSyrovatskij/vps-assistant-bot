@@ -1,0 +1,15 @@
+services:
+  api:
+    build: ./api
+    restart: always
+    ports:
+      - "8000:8000"
+
+  bot:
+    build: ./bot
+    restart: always
+    depends_on:
+      - api
+    environment:
+      - API_URL=http://api:8000/status  # Мы обращаемся к сервису по имени 'api'
+      - BOT_TOKEN=8894773469:AAFdZ26_-C075mgpg_WgRD5cPi2RwICb7_4
