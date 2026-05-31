@@ -2,14 +2,16 @@ services:
   api:
     build: ./api
     restart: always
+    # Порты можно не пробрасывать наружу, если к API обращается только бот
     ports:
       - "8000:8000"
 
   bot:
     build: ./bot
     restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./bot:/app  # Монтируем всю папку бота в папку /app контейнера
     depends_on:
       - api
-    environment:
-      - API_URL=http://api:8000/status  # Мы обращаемся к сервису по имени 'api'
-      - BOT_TOKEN=8894773469:AAFdZ26_-C075mgpg_WgRD5cPi2RwICb7_4
